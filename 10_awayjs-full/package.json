@@ -1,0 +1,71 @@
+{
+  "name": "awayjs-full",
+  "version": "0.3.13",
+  "description": "Complete monolitic build for all types of AwayJS projects",
+  "main": "bundle/awayjs-full.umd.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "rimraf": "rimraf",
+    "rollup": "rollup -c",
+    "uglifyjs": "uglifyjs ./bundle/awayjs-full.umd.js -o ./bundle/awayjs-full.umd.min.js --source-map \"content='./bundle/awayjs-full.umd.js.map'\" --mangle",
+    "tsc": "tsc --lib ES2015.Symbol,DOM,ScriptHost,ES5,ES2015.Iterable",
+    "tsc:build": "npm run tsc || exit 0",
+    "clean": "npm cache clean && npm run rimraf -- node_modules dist bundle",
+    "clean:dist": "npm run rimraf -- dist bundle",
+    "watch": "npm run tsc -- --w",
+    "prebuild": "npm run clean:dist",
+    "build": "npm run tsc:build && npm run rollup && npm run uglifyjs",
+    "version": "npm run build",
+    "postversion": "git push && git push --tags && npm publish",
+    "watch:core": "cd ./node_modules/@awayjs/core && npm run watch",
+    "watch:graphics": "cd ./node_modules/@awayjs/graphics && npm run watch",
+    "watch:scene": "cd ./node_modules/@awayjs/scene && npm run watch",
+    "watch:stage": "cd ./node_modules/@awayjs/stage && npm run watch",
+    "watch:renderer": "cd ./node_modules/@awayjs/renderer && npm run watch",
+    "watch:view": "cd ./node_modules/@awayjs/view && npm run watch",
+    "watch:materials": "cd ./node_modules/@awayjs/materials && npm run watch",
+    "watch:player": "cd ./node_modules/@awayjs/player && npm run watch",
+    "watch:parsers": "cd ./node_modules/@awayjs/parsers && npm run watch",
+    "start": "run-p -l \"watch:*\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/awayjs/awayjs-full.git"
+  },
+  "keywords": [
+    "AwayJS",
+    "WebGL",
+    "2D",
+    "3D",
+    "graphics"
+  ],
+  "author": "Rob Bateman",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/awayjs/awayjs-full/issues"
+  },
+  "homepage": "https://github.com/awayjs/awayjs-full#readme",
+  "dependencies": {
+    "@awayjs/core": "^0.7.0",
+    "@awayjs/graphics": "^0.3.0",
+    "@awayjs/scene": "^0.11.0",
+    "@awayjs/stage": "^0.9.0",
+    "@awayjs/view": "^0.4.0",
+    "@awayjs/renderer": "^0.9.0",
+    "@awayjs/materials": "^0.4.0",
+    "@awayjs/player": "^0.6.0",
+    "@awayjs/parsers": "^0.6.0",
+    "tslib": "^1.9.0"
+  },
+  "devDependencies": {
+    "concurrently": "^3.5.1",
+    "npm-run-all": "^4.1.3",
+    "rimraf": "^2.5.2",
+    "rollup": "^0.57.1",
+    "rollup-plugin-commonjs": "^9.1.0",
+    "rollup-plugin-node-resolve": "^3.3.0",
+    "typescript": "^2.6.1",
+    "uglify-js": "^3.0.15"
+  }
+}
